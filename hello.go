@@ -1,11 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 func main()  {
-	var nome string = "Felipe"
-	var idade int
-	var versao float32 = 1.1
-	fmt.Println("olá sr.", nome, "sua idade é", idade)
-	fmt.Println("este programa está na versão", versao)
+	name := "Felipe"
+	age := 24
+	version := 1.1
+	fmt.Println("olá sr.", name, "sua idade é", age)
+	fmt.Println("este programa está na versão", version)
+
+	fmt.Println("O tipo da variavel nome é", reflect.TypeOf(name), "e idade é", reflect.TypeOf(age), "e a versão", reflect.TypeOf(version))
 }
