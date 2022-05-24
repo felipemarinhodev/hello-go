@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
+
+const delay = 5
+const monitoring = 3
 
 func main()  {
 	showIntro()
@@ -47,6 +51,7 @@ func readCommand() int {
 	fmt.Scan(&commandRead)
 
 	fmt.Println("O comando escolhido foi", commandRead)
+	fmt.Println("")
 	return commandRead
 }
 
@@ -60,9 +65,14 @@ func startMonitoring() {
 		"https://www.caelum.com.br",
 	}
 
-	for i, site := range sites {
-		fmt.Println("Testando site", i, ":", site)
-		testSite(site)
+	for i := 0; i < monitoring; i++ {
+		for i, site := range sites {
+			fmt.Println("Testando site", i, ":", site)
+			testSite(site)
+		}
+
+		time.Sleep(delay * time.Second)
+		fmt.Println("")
 	}
 	fmt.Println("")
 }
