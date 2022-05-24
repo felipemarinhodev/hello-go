@@ -9,21 +9,23 @@ import (
 func main()  {
 	showIntro()
 
-	showMenu()
+	for {
+		showMenu()
 
-	command := readCommand()
+		command := readCommand()
 
-	switch command {
-		case 1:
-			startMonitoring()
-		case 2:
-			fmt.Println("Exibindo Logs...")
-		case 0:
-			fmt.Println("Saindo do programa...")
-			os.Exit(0)
-		default:
-			fmt.Println("Comando não suportado.")
-			os.Exit(-1)
+		switch command {
+			case 1:
+				startMonitoring()
+			case 2:
+				fmt.Println("Exibindo Logs...")
+			case 0:
+				fmt.Println("Saindo do programa...")
+				os.Exit(0)
+			default:
+				fmt.Println("Comando não suportado.")
+				os.Exit(-1)
+		}
 	}
 }
 
