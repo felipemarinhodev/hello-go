@@ -60,16 +60,20 @@ func startMonitoring() {
 		"https://www.caelum.com.br",
 	}
 
-	for _, site := range sites {
-		// fmt.Println(sites[i])
+	for i, site := range sites {
+		fmt.Println("Testando site", i, ":", site)
+		testSite(site)
+	}
+	fmt.Println("")
+}
 
-		resp, _ := http.Get(site)
+func testSite(site string) {
+	resp, _ := http.Get(site)
 
-		if resp.StatusCode == 200 {
-			fmt.Println("Site:", site, "foi carregado com sucesso!")
-			} else {
-				fmt.Println("Site:", site, "está com problema. Status code:", resp.StatusCode)
-			}
-		}
+	if resp.StatusCode == 200 {
+		fmt.Println("Site:", site, "foi carregado com sucesso!")
+	} else {
+		fmt.Println("Site:", site, "está com problema. Status code:", resp.StatusCode)
+	}
 }
 
