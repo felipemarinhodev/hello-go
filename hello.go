@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -58,14 +61,7 @@ func readCommand() int {
 func startMonitoring() {
 	fmt.Println("Monitorando...")
 
-	sites := []string {
-		"https://random-status-code.herokuapp.com",
-		"https://www.alura.com.br",
-		"https://www.casadocodigo.com.br",
-		"https://www.caelum.com.br",
-	}
-
-	readSitesFile();
+	sites := readSitesFile();
 
 	for i := 0; i < monitoring; i++ {
 		for i, site := range sites {
@@ -94,13 +90,23 @@ func testSite(site string) {
 }
 
 func readSitesFile() []string {
-	arquivo, err := os.Open("sites.txt")
-
-	var site []string
+	var sites []string
+	file, err := os.Open("sites.txt")
 	if err != nil {
 		fmt.Println("Ocorreu um erro", err)
 	}
-	fmt.Println("ABRINDO ARQUIVO", arquivo)
 
-	return site
+	reader := bufio.NewReader(file)
+	for  {
+		line, err := reader.ReadString('\n')
+		line = strings.TrimSpace(line)
+		if err == io.EOF {
+			break
+		}
+		fmt.Println("Endereços localizados", line)
+		sites = append(sites, line)
+	}
+	fmt.Println(sites)
+	file.Close()
+	return sites
 }
