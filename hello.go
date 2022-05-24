@@ -65,6 +65,8 @@ func startMonitoring() {
 		"https://www.caelum.com.br",
 	}
 
+	readSitesFile();
+
 	for i := 0; i < monitoring; i++ {
 		for i, site := range sites {
 			fmt.Println("Testando site", i, ":", site)
@@ -78,7 +80,11 @@ func startMonitoring() {
 }
 
 func testSite(site string) {
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
@@ -87,3 +93,14 @@ func testSite(site string) {
 	}
 }
 
+func readSitesFile() []string {
+	arquivo, err := os.Open("sites.txt")
+
+	var site []string
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
+	fmt.Println("ABRINDO ARQUIVO", arquivo)
+
+	return site
+}
