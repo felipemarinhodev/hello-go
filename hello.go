@@ -16,6 +16,7 @@ const monitoring = 3
 func main()  {
 	showIntro()
 
+	registerLog("site-false", false)
 	for {
 		showMenu()
 
@@ -84,8 +85,10 @@ func testSite(site string) {
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
-	} else {
-		fmt.Println("Site:", site, "está com problema. Status code:", resp.StatusCode)
+		registerLog(site, true)
+		} else {
+			fmt.Println("Site:", site, "está com problema. Status code:", resp.StatusCode)
+			registerLog(site, true)
 	}
 }
 
@@ -109,4 +112,14 @@ func readSitesFile() []string {
 	fmt.Println(sites)
 	file.Close()
 	return sites
+}
+
+func registerLog(site string, status bool) {
+
+	file, err := os.OpenFile("log.txt", os.O_RDWR| os.O_CREATE, 0666)
+	if err != nil {
+		fmt.Println("registerLog err", err)
+	}
+	fmt.Println("registerLog file", file)
+	file.Close()
 }
