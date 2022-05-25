@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -116,10 +117,10 @@ func readSitesFile() []string {
 
 func registerLog(site string, status bool) {
 
-	file, err := os.OpenFile("log.txt", os.O_RDWR| os.O_CREATE, 0666)
+	file, err := os.OpenFile("log.txt", os.O_RDWR| os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Println("registerLog err", err)
 	}
-	fmt.Println("registerLog file", file)
+	file.WriteString(time.Now().Format("02/01/2006 15:04:05") + " - " + site + " - online: "+ strconv.FormatBool(status) + "\n")
 	file.Close()
 }
